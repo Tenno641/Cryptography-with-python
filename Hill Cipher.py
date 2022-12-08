@@ -72,3 +72,9 @@ def deciphering(arr, deKey):
     matrix_to_text(ciphertext2)
 
 
+plaintext = ""
+def matrix_to_text(arr2):
+    global plaintext
+
+    for x in arr2:
+        plaintext = plaintext.__add__(alphabet[x])
