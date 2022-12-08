@@ -78,3 +78,30 @@ def matrix_to_text(arr2):
 
     for x in arr2:
         plaintext = plaintext.__add__(alphabet[x])
+
+
+print("\nEnter Your choice\n1. Encrypt\n2. Decrypt\n3. Exit")
+
+choice = input()
+
+if choice == '1':
+
+    print("Enter text to encrypt")
+    message = input()
+
+    text_to_matrix(message)
+    enciphering(lettersMatrix)
+    print(plaintext)
+
+elif choice == '2':
+
+    print("Enter text to decrypt")
+    hiddenMessage = input()
+
+    text_to_matrix(hiddenMessage)
+    inv_of_2x2_matrix(key)
+    print(plaintext)
+
+else:
+    print("Doesn't exist!")
+
