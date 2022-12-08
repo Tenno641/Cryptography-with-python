@@ -7,3 +7,12 @@ alphabet = [' ', 'a', 'b', 'c', 'd', 'e',
 
 key = [3, 3, 2, 5]
 
+lettersMatrix = []
+def text_to_matrix(text):
+
+    for x in text:
+        for y in alphabet:
+            if x == y:
+                lettersMatrix.append(alphabet.index(y))
+
+
