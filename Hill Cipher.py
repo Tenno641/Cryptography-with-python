@@ -33,3 +33,25 @@ def enciphering(arr):
     matrix_to_text(ciphertext)
 
 
+#making new key for deciphering
+
+
+def inv_of_2x2_matrix(invKey):
+    newKey = []
+
+    invDetKey = 3
+
+    #swapping
+    invKey[0], invKey[3] = invKey[3], invKey[0]
+
+    invKey[1] = 0 - invKey[1]
+    invKey[2] = 0 - invKey[2]
+
+    for x in range(0, int(len(invKey))):
+        invKey[x] = invKey[x].__mod__(26)
+        invKey[x] *= invDetKey
+        newKey.append(invKey[x])
+
+    deciphering(lettersMatrix, newKey)
+
+
