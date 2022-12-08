@@ -16,3 +16,20 @@ def text_to_matrix(text):
                 lettersMatrix.append(alphabet.index(y))
 
 
+def enciphering(arr):
+    ciphertext = []
+
+    if len(arr) % 2 == 1:
+        arr.append(0)
+
+    times = len(arr)
+
+    i = 0
+    for x in range(0, int(times / 2)):
+        ciphertext.append((arr[i] * key[0] + arr[i+1] * key[1]).__mod__(26))
+        ciphertext.append((arr[i] * key[2] + arr[i+1] * key[3]).__mod__(26))
+        i += 2
+
+    matrix_to_text(ciphertext)
+
+
