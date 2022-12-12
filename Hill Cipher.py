@@ -1,21 +1,32 @@
-alphabet = ['a', 'b', 'c', 'd', 'e',
+#global uses
+alphabet = [' ', 'a', 'b', 'c', 'd', 'e',
             'f', 'g', 'h', 'i', 'j', 'k',
             'l', 'm', 'n', 'o', 'p', 'q',
             'r', 's', 't', 'u', 'v', 'w',
             'x', 'y', 'z']
 
+forbiddenDets = [2, 4, 6, 8, 10, 12, 13, 14, 16, 18, 20, 22, 24, 26]
 
-key = [3, 3, 2, 5]
+
+#global functions
+key = []
+def key_to_matrix(text):
+
+    for x in text:
+        for y in alphabet:
+            if x == y:
+                key.append(alphabet.index(y))
 
 lettersMatrix = []
 def text_to_matrix(text):
-
+    
     for x in text:
         for y in alphabet:
             if x == y:
                 lettersMatrix.append(alphabet.index(y))
 
 
+# - - - - - encrypting - - - - - 
 def enciphering(arr):
     ciphertext = []
 
@@ -31,15 +42,15 @@ def enciphering(arr):
         i += 2
 
     matrix_to_text(ciphertext)
-
+ 
 
 #making new key for deciphering
-
-
 def inv_of_2x2_matrix(invKey):
     newKey = []
 
-    invDetKey = 3
+    det = (invKey[0] * invKey[3] - invKey[1] * invKey[2])
+
+    invDetKey = pow(det, -1, 26)
 
     #swapping
     invKey[0], invKey[3] = invKey[3], invKey[0]
@@ -54,7 +65,7 @@ def inv_of_2x2_matrix(invKey):
 
     deciphering(lettersMatrix, newKey)
 
-
+# - - - - - decrypting - - - - - 
 def deciphering(arr, deKey):
     ciphertext2 = []
 
@@ -72,6 +83,7 @@ def deciphering(arr, deKey):
     matrix_to_text(ciphertext2)
 
 
+#global function to convert matrix to text 
 plaintext = ""
 def matrix_to_text(arr2):
     global plaintext
@@ -80,28 +92,64 @@ def matrix_to_text(arr2):
         plaintext = plaintext.__add__(alphabet[x])
 
 
-print("\nEnter Your choice\n1. Encrypt\n2. Decrypt\n3. Exit")
+
+#Key from the user
+print("Enter 4 letters word as a key : ")
+keyText = input().lower()
+
+#checking the key validation 
+if len(keyText) == 4:
+    key_to_matrix(keyText)
+else:
+    print("Please, Enter 4 letters word!!")
+    exit()
+
+#checking the determinant validation 
+det = (key[0] * key[3] - key[1] * key[2])
+print(key)
+
+if det <= 0:
+    print(det, ": Negative number!, try another word.")
+    exit()
+    
+while det > 26:
+    det -= 26
+
+print("determinant is : ", det)
+
+if det in forbiddenDets:
+    print(det, "is not invertible for the given modulus, try another word.")
+    exit()
+
+invDetKey = pow(det, -1, 26)
+
+
+# UI
+print("\nEnter Your choice\n1. Encrypt\n2. Decrypt\n3. Exit\n--------------------")
 
 choice = input()
 
 if choice == '1':
 
-    print("Enter text to encrypt")
-    message = input()
+    print("Enter text to encrypt : ")
+    message = input().lower()
 
     text_to_matrix(message)
     enciphering(lettersMatrix)
-    print(plaintext)
+    print("text after encrypting : ", plaintext)
 
 elif choice == '2':
 
-    print("Enter text to decrypt")
-    hiddenMessage = input()
+    print("Enter text to decrypt : ")
+    hiddenMessage = input().lower()
 
     text_to_matrix(hiddenMessage)
     inv_of_2x2_matrix(key)
-    print(plaintext)
+    print("the original text : ", plaintext)
+
+elif choice == '3':
+    print("See Ya, Bye :(")
+    exit()
 
 else:
     print("Doesn't exist!")
-
