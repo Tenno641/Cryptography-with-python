@@ -1,5 +1,5 @@
 #global uses
-alphabet = [' ', 'a', 'b', 'c', 'd', 'e',
+alphabet = ['a', 'b', 'c', 'd', 'e',
             'f', 'g', 'h', 'i', 'j', 'k',
             'l', 'm', 'n', 'o', 'p', 'q',
             'r', 's', 't', 'u', 'v', 'w',
@@ -40,7 +40,7 @@ def enciphering(arr):
         ciphertext.append((arr[i] * key[0] + arr[i+1] * key[1]).__mod__(26))
         ciphertext.append((arr[i] * key[2] + arr[i+1] * key[3]).__mod__(26))
         i += 2
-
+        
     matrix_to_text(ciphertext)
  
 
@@ -48,7 +48,7 @@ def enciphering(arr):
 def inv_of_2x2_matrix(invKey):
     newKey = []
 
-    det = (invKey[0] * invKey[3] - invKey[1] * invKey[2])
+    det = (invKey[0] * invKey[3] - invKey[1] * invKey[2]).__mod__(26)
 
     invDetKey = pow(det, -1, 26)
 
@@ -68,9 +68,6 @@ def inv_of_2x2_matrix(invKey):
 # - - - - - decrypting - - - - - 
 def deciphering(arr, deKey):
     ciphertext2 = []
-
-    if len(arr) % 2 == 1:
-        arr.append(0)
 
     times = len(arr)
 
@@ -105,7 +102,7 @@ else:
     exit()
 
 #checking the determinant validation 
-det = (key[0] * key[3] - key[1] * key[2])
+det = (key[0] * key[3] - key[1] * key[2]).__mod__(26)
 print(key)
 
 if det <= 0:
@@ -129,7 +126,7 @@ print("\nEnter Your choice\n1. Encrypt\n2. Decrypt\n3. Exit\n-------------------
 
 choice = input()
 
-if choice == '1':
+if choice == '1': # encryption
 
     print("Enter text to encrypt : ")
     message = input().lower()
@@ -138,7 +135,7 @@ if choice == '1':
     enciphering(lettersMatrix)
     print("text after encrypting : ", plaintext)
 
-elif choice == '2':
+elif choice == '2': # decryption
 
     print("Enter text to decrypt : ")
     hiddenMessage = input().lower()
